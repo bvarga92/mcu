@@ -1,0 +1,2 @@
+# mcu
+Vegyes mikrokontrolleres projektek.
