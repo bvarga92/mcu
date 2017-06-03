@@ -1,5 +1,6 @@
 # Vegyes mikrokontrolleres projektek
 
+- **avr_bootloader**: bootloader példa ATmega128 mikrokontrollerrel (program betöltése az EEPROM memóriából)
 - **avr_freertos**: FreeRTOS beüzemelése ATmega128 mikrokontrolleren
 - **avr_ucos2**: uC/OS-II beüzemelése ATmega128 mikrokontrolleren
 - **stm32f7_fractal_conway**: fraktálok rajzolása STM32F746-Discovery kártyán + Conway-féle életjáték
