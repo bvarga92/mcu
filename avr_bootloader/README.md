@@ -1,4 +1,4 @@
-**Bootloader példaprogram a T-Bird 2 fejlesztőkártyához**
+## Bootloader példaprogram a T-Bird 2 fejlesztőkártyához
 
 Reset után a bootloader az EEPROM memória első 512 bájtját a flash memóriába másolja. Miután ez elkészült, hangjelzést hallunk. Ekkor az első nyomógomb megnyomásával befejezhetjük a bootolást, és elindíthatjuk a főprogram futását. A főprogram egy LED-et villogtat.
 
