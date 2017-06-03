@@ -21,17 +21,17 @@ void gui(void){
 		touchRead();
 		if(touchData.status==TOUCH_RELEASED) continue;
 		if((touchData.p[0].x>=5)&&(touchData.p[0].x<=173)&&(touchData.p[0].y>=8)&&(touchData.p[0].y<=28)){
-			xmin=-1.5; width=3.0; ymin=-1.0; height=2.0;
+			xmin=-1.5f; width=3.0f; ymin=-1.0f; height=2.0f;
 			selected=&julia;
 			break;
 		}
 		if((touchData.p[0].x>=5)&&(touchData.p[0].x<=243)&&(touchData.p[0].y>=48)&&(touchData.p[0].y<=68)){
-			xmin=-2.5; width=3.5; ymin=-1.0; height=2.0;
+			xmin=-2.5f; width=3.5f; ymin=-1.0f; height=2.0f;
 			selected=&mandelbrot;
 			break;
 		}
 		if((touchData.p[0].x>=5)&&(touchData.p[0].x<=285)&&(touchData.p[0].y>=88)&&(touchData.p[0].y<=108)){
-			xmin=-1.0; width=2.0; ymin=-1.0; height=2.0;
+			xmin=-1.0f; width=2.0f; ymin=-1.0f; height=2.0f;
 			selected=&sierpinski;
 			break;
 		}
@@ -64,11 +64,11 @@ int main(void){
 		touchRead();
 		if(touchData.status==TOUCH_PRESSED){
 			/* az erintes helyet kozepre tesszuk */
-			xmin=(float)(touchData.p[0].x)/479.0*width+xmin-width*0.5;
-			ymin=(271.0-(float)(touchData.p[0].y))/271.0*height+ymin-height*0.5;
+			xmin=(float)(touchData.p[0].x)/479.0f*width+xmin-width*0.5f;
+			ymin=(271.0f-(float)(touchData.p[0].y))/271.0f*height+ymin-height*0.5f;
 			/* belezoomolunk */
-			width*=0.5; height*=0.5;
-			xmin+=width*0.5; ymin+=height*0.5;
+			width*=0.5f; height*=0.5f;
+			xmin+=width*0.5f; ymin+=height*0.5f;
 			selected(xmin,xmin+width,ymin,ymin+height);
 		}
 		else if(buttonRead()){

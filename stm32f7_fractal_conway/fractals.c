@@ -31,15 +31,15 @@ void julia(float xmin, float xmax, float ymin, float ymax){
 	uint16_t i, j, iteration, color;
 	float x0, y0, x, y, xtemp;
 	for(i=0;i<480;i++){
-		x0=i/479.0*(xmax-xmin)+xmin;
+		x0=i/479.0f*(xmax-xmin)+xmin;
 		for(j=0;j<272;j++){
-			y0=j/271.0*(ymin-ymax)+ymax;
+			y0=j/271.0f*(ymin-ymax)+ymax;
 			x=x0;
 			y=y0;
 			iteration=0;
 			while((x*x+y*y<4)&&(iteration<MAX_ITERATIONS)){
-				xtemp=x*x-y*y-0.7;
-				y=2*x*y+0.27015;
+				xtemp=x*x-y*y-0.7f;
+				y=2*x*y+0.27015f;
 				x=xtemp;
 				iteration++;
 			}
@@ -53,11 +53,11 @@ void mandelbrot(float xmin, float xmax, float ymin, float ymax){
 	uint16_t i, j, iteration, color;
 	float x0, y0, x, y, xtemp;
 	for(i=0;i<480;i++){
-		x0=i/479.0*(xmax-xmin)+xmin;
+		x0=i/479.0f*(xmax-xmin)+xmin;
 		for(j=0;j<272;j++){
-			y0=j/271.0*(ymin-ymax)+ymax;
-			x=0.0;
-			y=0.0;
+			y0=j/271.0f*(ymin-ymax)+ymax;
+			x=0.0f;
+			y=0.0f;
 			iteration=0;
 			while((x*x+y*y<4)&&(iteration<MAX_ITERATIONS)){
 				xtemp=x*x-y*y+x0;
@@ -74,27 +74,27 @@ void mandelbrot(float xmin, float xmax, float ymin, float ymax){
 void sierpinski(float xmin, float xmax, float ymin, float ymax){
 	uint32_t i;
 	float w, h, ax, ay, bx, by, cx, cy, px, py;
-	w=960.0/(xmax-xmin);
-	h=544.0/(ymax-ymin);
-	ax=-(1+xmin)*0.5*w; ay=(1+ymax)*0.5*h;
+	w=960.0f/(xmax-xmin);
+	h=544.0f/(ymax-ymin);
+	ax=-(1+xmin)*0.5f*w; ay=(1+ymax)*0.5f*h;
 	bx=ax+w; by=ay;
-	cx=(ax+bx)*0.5; cy=ay-h;
+	cx=(ax+bx)*0.5f; cy=ay-h;
 	px=ax; py=ay;
 	gFill(COLOR_WHITE);
 	for(i=0;i<1600000;i++){
 		if((px>=0)&&(py>=0)&&(px<480)&&(py<272)) gDrawPixel((uint16_t)px,(uint16_t)py,COLOR_BLACK);
 		switch(randomGet()%3){
 			case 0:
-				px=(px+ax)/2.0;
-				py=(py+ay)/2.0;
+				px=(px+ax)/2.0f;
+				py=(py+ay)/2.0f;
 				break;
 			case 1:
-				px=(px+bx)/2.0;
-				py=(py+by)/2.0;
+				px=(px+bx)/2.0f;
+				py=(py+by)/2.0f;
 				break;
 			case 2:
-				px=(px+cx)/2.0;
-				py=(py+cy)/2.0;
+				px=(px+cx)/2.0f;
+				py=(py+cy)/2.0f;
 				break;
 		}
 	}
@@ -110,8 +110,8 @@ static void kochsub(uint8_t level, int16_t x1, int16_t y1, int16_t x5, int16_t y
 		dy=y5-y1;
 		x2=x1+dx/3;
 		y2=y1+dy/3;
-		x3=(int16_t)(0.5*(x1+x5)+sqrt(3)*(y1-y5)/6);
-		y3=(int16_t)(0.5*(y1+y5)+sqrt(3)*(x5-x1)/6);
+		x3=(int16_t)(0.5f*(x1+x5)+sqrtf(3)*(y1-y5)/6);
+		y3=(int16_t)(0.5f*(y1+y5)+sqrtf(3)*(x5-x1)/6);
 		x4=x1+2*dx/3;
 		y4=y1+2*dy/3;
 		kochsub(level-1,x1,y1,x2,y2);
