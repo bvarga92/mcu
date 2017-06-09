@@ -26,7 +26,7 @@ static uint8_t accelRead(uint8_t address){
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-	accelDataAvailable=1;
+	if(GPIO_Pin==GPIO_PIN_0) accelDataAvailable=1;
 }
 
 void EXTI0_IRQHandler(void){
