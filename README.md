@@ -6,6 +6,7 @@
 - **avr_ppg**: fotopletizmográf ATmega328 mikrokontrollerrel ([videó](https://www.youtube.com/watch?v=kn0J-fMiewQ&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **avr_servo_tester**: RC szervó teszter ATtiny13 mikrokontrollerrel ([videó](https://www.youtube.com/watch?v=7l7EgJCPuvo&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **avr_ucos2**: uC/OS-II beüzemelése ATmega128 mikrokontrolleren
+- **stm32f4_coos**: CoOS beüzemelése STM32F4-Discovery kártyán
 - **stm32f4_freertos**: FreeRTOS beüzemelése STM32F4-Discovery kártyán
 - **stm32f746_fractal_conway**: fraktálok rajzolása STM32F746-Discovery kártyán + Conway-féle életjáték
 - **stm32f746_freertos**: FreeRTOS beüzemelése STM32F746-Discovery kártyán
