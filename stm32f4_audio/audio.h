@@ -11,7 +11,7 @@
 	/* 16 bites mintak kuldese az audio kimenetre */
 	void audioOutInit(uint32_t samplingRate, uint16_t *buffer, uint32_t length);
 
-	/* nyers PCM jel vetele a MEMS mikrofontol */
+	/* nyers PDM jel vetele a MEMS mikrofontol */
 	void audioInInit(uint32_t samplingRate, uint16_t *buffer, uint32_t length);
 
 #endif
