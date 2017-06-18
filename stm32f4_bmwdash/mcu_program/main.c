@@ -30,6 +30,7 @@ static uint8_t updateFlag=0;
 void vcpReceived(uint8_t data){
 	static char buffer[256];
 	static uint8_t cntr=0;
+	ledToggle(LED_BLUE);
 	if(data=='$') //start delimiter
 		cntr=0;
 	else if(cntr==0) //ha cntr==0, de nem $ jott, akkor ez hiba
@@ -48,6 +49,7 @@ void vcpReceived(uint8_t data){
 }
 
 int main(void){
+	uint8_t prevSpeed=0;
 	HAL_Init();
 	configSystemClock();
 	ledInit();
@@ -70,7 +72,10 @@ int main(void){
 			ledToggle(LED_ORANGE);
 			vcpTransmit((uint8_t*)"Data received.\r\n",16);
 			canSetRPM(rpm);
-			speedSet(speed);
+			if(speed!=prevSpeed){
+				speedSet(speed);
+				prevSpeed=speed;
+			}
 			if(signalLeft==1)
 				kbusLeftSignalOn();
 			else if(signalLeft==2)
