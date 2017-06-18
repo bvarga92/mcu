@@ -27,13 +27,13 @@ typedef struct{
 
 
 static telemetry_t telemetry;
-static HANDLE serial_port;
+static HANDLE serialPort;
 
 
 SCSAPI_VOID telemetry_frame_end(const scs_event_t event, const void *const event_info, const scs_context_t context){
 	static bool prevLSignal=false, prevRSignal=false, prevHighBeam=false;
 	static unsigned long prevTime=0;
-	if(serial_port==INVALID_HANDLE_VALUE) return;
+	if(serialPort==INVALID_HANDLE_VALUE) return;
 	/* idozites */
 	unsigned long now=GetTickCount();
 	if((now-prevTime)<50) return;
@@ -77,8 +77,8 @@ SCSAPI_VOID telemetry_frame_end(const scs_event_t event, const void *const event
 	ss.str().copy(buffer,17);
 	for(unsigned i=0;i<17;i++){
 		unsigned long bytesWritten;
-		WriteFile(serial_port,&buffer[i],1,&bytesWritten,NULL);
-		FlushFileBuffers(serial_port);
+		WriteFile(serialPort,&buffer[i],1,&bytesWritten,NULL);
+		FlushFileBuffers(serialPort);
 	}
 }
 
@@ -110,7 +110,7 @@ SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_in
 	std::ostringstream port;
 	port<<"//./COM"<<n;
 	/* COM port megnyitasa */
-	serial_port=CreateFileA(port.str().c_str(),GENERIC_READ|GENERIC_WRITE,0,NULL,OPEN_EXISTING,0,NULL);
+	serialPort=CreateFileA(port.str().c_str(),GENERIC_READ|GENERIC_WRITE,0,NULL,OPEN_EXISTING,0,NULL);
 	/* callback fuggvenyek regisztralasa */
 	version_params->register_for_event(SCS_TELEMETRY_EVENT_frame_end,telemetry_frame_end,NULL);
 	version_params->register_for_channel(SCS_TELEMETRY_TRUCK_CHANNEL_speed,SCS_U32_NIL,SCS_VALUE_TYPE_float,SCS_TELEMETRY_CHANNEL_FLAG_none,telemetry_store_float,&telemetry.speed);
@@ -122,10 +122,10 @@ SCSAPI_RESULT scs_telemetry_init(const scs_u32_t version, const scs_telemetry_in
 }
 
 SCSAPI_VOID scs_telemetry_shutdown(void){
-	CloseHandle(serial_port);
+	CloseHandle(serialPort);
 }
 
 BOOL APIENTRY DllMain(HMODULE module, DWORD reason_for_call, LPVOID reseved){
-	if(reason_for_call==DLL_PROCESS_DETACH) CloseHandle(serial_port);
+	if(reason_for_call==DLL_PROCESS_DETACH) CloseHandle(serialPort);
 	return TRUE;
 }
