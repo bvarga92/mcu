@@ -8,7 +8,7 @@
 - **avr_quadruped**: négylábú robot RC szervókból ATmega328 mikrokontrollerrel ([videó](https://www.youtube.com/watch?v=rxhX0A6W_Ac&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **avr_servo_tester**: RC szervó teszter ATtiny13 mikrokontrollerrel ([videó](https://www.youtube.com/watch?v=7l7EgJCPuvo&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **avr_ucos2**: uC/OS-II beüzemelése ATmega128 mikrokontrolleren
-- **stm32f103_usbio**: periféria 10 potméterrel, LCD kijelzővel, USB és SPI interfésszel **(TODO)**
+- **stm32f103_usbio**: periféria 10 potméterrel, LCD kijelzővel, USB és SPI interfésszel
 - **stm32f4_accel**: az STM32F4-Discovery kártyán található LIS3DSH gyorsulásmérő kezelése
 - **stm32f4_assembly**: inline Assembly demó STM32F4-Discovery kártyára
 - **stm32f4_audio**: az STM32F4-Discovery kártyán található audio codec kezelése
