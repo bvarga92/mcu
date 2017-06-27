@@ -15,6 +15,7 @@
 - **stm32f4_assembly**: inline Assembly demó STM32F4-Discovery kártyára
 - **stm32f4_audio**: az STM32F4-Discovery kártyán található audio codec kezelése
 - **stm32f4_bmwdash**: BMW E46 műszeregység vezérlése USB-n keresztül, STM32F4-Discovery kártyával ([videó1](https://www.youtube.com/watch?v=TrphW-8eMx0&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG), [videó2](https://www.youtube.com/watch?v=Y-DR8o5ljKY&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
+- **stm32f4_boot_from_usb**: USB bootloader (flash memória programozása pendrive-ról olvasott fájllal)
 - **stm32f4_coos**: CoOS beüzemelése STM32F4-Discovery kártyán
 - **stm32f4_freertos**: FreeRTOS beüzemelése STM32F4-Discovery kártyán
 - **stm32f746_fractal_conway**: fraktálok rajzolása STM32F746-Discovery kártyán + Conway-féle életjáték
