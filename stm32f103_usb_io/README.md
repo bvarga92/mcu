@@ -1,1 +1,1 @@
-![photo](https://github.com/bvarga92/mcu/raw/main/stm32f103_usbio/photo.jpg)
+![photo](https://raw.githubusercontent.com/bvarga92/mcu/main/stm32f103_usbio/photo.jpg)

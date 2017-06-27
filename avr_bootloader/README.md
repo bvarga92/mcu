@@ -6,6 +6,6 @@ A *toFlash* projekt tartalmazza a bootloadert, ezt a kontroller flash memóriáj
 
 A *toEEPROM* projekt tartalmazza az EEPROM memóriába írandó kódot.
 
-![programozás](https://github.com/bvarga92/mcu/raw/main/avr_bootloader/program.png)
+![programozás](https://raw.githubusercontent.com/bvarga92/mcu/main/avr_bootloader/program.png)
 	
 Természetesen a valóságban nem sok értelme van a belső EEPROM-ból betölteni a programot, azonban ezen demonstráció alapján könnyen implementálható UART-ról, USB-ről, vagy SD kártyáról való bootolás is.
