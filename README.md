@@ -10,6 +10,7 @@
 - **avr_ucos2**: uC/OS-II beüzemelése ATmega128 mikrokontrolleren
 - **stm32f103_usb_hid**: USB HID osztály megvalósítása STM32F103 mikrokontrollerrel
 - **stm32f103_usb_io**: periféria 10 potméterrel, LCD kijelzővel, USB és SPI interfésszel
+- **stm32f103_usb_msc**: az STM32F103 mikrokontroller belső flash memóriájának elérése USB háttértárként
 - **stm32f4_accel**: az STM32F4-Discovery kártyán található LIS3DSH gyorsulásmérő kezelése
 - **stm32f4_assembly**: inline Assembly demó STM32F4-Discovery kártyára
 - **stm32f4_audio**: az STM32F4-Discovery kártyán található audio codec kezelése
