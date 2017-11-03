@@ -1,5 +1,6 @@
 # Vegyes mikrokontrolleres projektek
 
+- **avr_airmeter**: szálló por koncentrációjának mérése Sharp GP2Y1010AU szenzorral és ATmega328 mikrokontrollerrel
 - **avr_balancebot**: két keréken egyensúlyozó robot ATmega328 mikrokontrollerrel ([videó](https://www.youtube.com/watch?v=zmQIJydytAc&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **avr_bmwdash**: BMW E46 műszeregység vezérlése ATmega328 mikrokontrollerrel és MCP2515 CAN vezérlővel ([videó](https://www.youtube.com/watch?v=A_7LcNf6YWg&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **avr_bootloader**: bootloader példa ATmega128 mikrokontrollerrel (program betöltése az EEPROM memóriából)
