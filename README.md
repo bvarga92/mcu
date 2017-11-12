@@ -9,6 +9,7 @@
 - **avr_quadruped**: négylábú robot RC szervókból ATmega328 mikrokontrollerrel ([videó](https://www.youtube.com/watch?v=rxhX0A6W_Ac&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **avr_servo_tester**: RC szervó teszter ATtiny13 mikrokontrollerrel ([videó](https://www.youtube.com/watch?v=7l7EgJCPuvo&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **avr_ucos2**: uC/OS-II beüzemelése ATmega128 mikrokontrolleren
+- **efm32_helloworld**: tesztprojekt az EFM32GG-STK3700 fejlesztőkártyához
 - **stm32f103_agilent_logger**: PC-s adatgyűjtő interfész az Agilent/HP 34401A multiméterhez ([videó](https://www.youtube.com/watch?v=FOJCqtJNScE&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **stm32f103_stepper**: léptetőmotorok vezérlése USB-n keresztül, STM32F103 mikrokontrollerrel
 - **stm32f103_usb_hid**: USB HID osztály megvalósítása STM32F103 mikrokontrollerrel
