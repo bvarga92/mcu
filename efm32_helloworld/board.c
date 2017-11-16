@@ -33,10 +33,12 @@ void ledToggle(uint8_t n){
 	if(n<2) GPIO_PinOutToggle(gpioPortE,n+2);
 }
 
-uint8_t ledGet(uint8_t n){
-	return (n<2)?GPIO_PinOutGet(gpioPortE,n+2):0;
+bool ledGet(uint8_t n){
+	if(n>1) return false;
+	return GPIO_PinOutGet(gpioPortE,n+2)?true:false;
 }
 
-uint8_t pbGet(uint8_t n){
-	return (n<2)?!GPIO_PinInGet(gpioPortB,n+9):0;
+bool pbGet(uint8_t n){
+	if(n>1) return false;
+	return GPIO_PinInGet(gpioPortB,n+9)?false:true;
 }
