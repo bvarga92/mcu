@@ -27,3 +27,4 @@
 - **stm32f746_fractal_conway**: fraktálok rajzolása STM32F746-Discovery kártyán + Conway-féle életjáték
 - **stm32f746_freertos**: FreeRTOS beüzemelése STM32F746-Discovery kártyán
 - **stm32f746_lcd_demo**: LCD kezelés és grafika demó STM32F746-Discovery kártyához
+- **stm32f746_ppg**: fotopletizmográf MAX30100 modullal és STM32F746-Discovery kártyával
