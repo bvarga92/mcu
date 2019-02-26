@@ -12,6 +12,7 @@
 - **efm32_helloworld**: tesztprojekt az EFM32GG-STK3700 fejlesztőkártyához
 - **stm32f103_agilent_logger**: PC-s adatgyűjtő interfész az Agilent/HP 34401A multiméterhez ([videó](https://www.youtube.com/watch?v=FOJCqtJNScE&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **stm32f103_lidar**: 3D szkenner Garmin Lite v3 LIDAR eszközzel
+- **stm32f103_lsm6dsox**: az LSM6DSOX gyorsulásmérő illesztése STM32F103 mikrokontrollerhez
 - **stm32f103_stepper**: léptetőmotorok vezérlése USB-n keresztül, STM32F103 mikrokontrollerrel
 - **stm32f103_usb_hid**: USB HID osztály megvalósítása STM32F103 mikrokontrollerrel
 - **stm32f103_usb_io**: periféria 10 potméterrel, LCD kijelzővel, USB és SPI interfésszel
