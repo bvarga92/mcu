@@ -15,9 +15,10 @@ namespace lsm6dsox_gui
     public partial class Form1 : Form
     {
 
+        private const int dx = 3;
         private SerialPort comPort = new SerialPort();
         private double temperature;
-        private double[,] buf = new double[6, 100];
+        private double[,] buf;
         private int bufEnd = -1;
         private int bufValidCnt = 0;
         private Bitmap bmAcc, bmGyr;
@@ -43,10 +44,15 @@ namespace lsm6dsox_gui
         {
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
             findPorts();
-            bmAcc = new Bitmap(pictureBoxAcc.ClientRectangle.Width, pictureBoxAcc.ClientRectangle.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            bmGyr = new Bitmap(pictureBoxGyr.ClientRectangle.Width, pictureBoxGyr.ClientRectangle.Height, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            bmAcc = new Bitmap(pictureBoxAcc.ClientSize.Width, pictureBoxAcc.ClientSize.Height);
+            bmGyr = new Bitmap(pictureBoxGyr.ClientSize.Width, pictureBoxGyr.ClientSize.Height);
             gAcc = Graphics.FromImage(bmAcc);
             gGyr = Graphics.FromImage(bmGyr);
+            gAcc.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            gGyr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            buf = new double[6, pictureBoxAcc.ClientSize.Width / dx + 1];
+            labelAcc.Left = (this.ClientSize.Width - labelAcc.Size.Width) / 2;
+            labelGyr.Left = (this.ClientSize.Width - labelGyr.Size.Width) / 2;
         }
 
         private void btnRescan_Click(object sender, EventArgs e)
@@ -123,19 +129,19 @@ namespace lsm6dsox_gui
             labelTemp.Text = String.Format("Temperature: {0, 0:f1}\u00B0C", temperature);
             gAcc.Clear(SystemColors.Control);
             gGyr.Clear(SystemColors.Control);
-            int x = (buf.GetLength(1) - bufValidCnt) * 3;
+            int x = (buf.GetLength(1) - bufValidCnt) * dx;
             double[] y = { 0, 0, 0, 0, 0, 0 }, yPrev = { 0, 0, 0, 0, 0, 0 };
-            for (int i = buf.GetLength(1) - bufValidCnt; i < buf.GetLength(1); i++, x += 3)
+            for (int i = buf.GetLength(1) - bufValidCnt; i < buf.GetLength(1); i++, x += dx)
             {
                 for (int j = 0; j < 6; j++) y[j] = buf[j, (bufEnd + 1 + i) % buf.GetLength(1)];
                 if (i > buf.GetLength(1) - bufValidCnt)
                 {
-                    gAcc.DrawLine(new Pen(System.Drawing.Color.Red, 2), x - 3, 65 - (int)(yPrev[0] * 22), x, 65 - (int)(y[0] * 22));
-                    gAcc.DrawLine(new Pen(System.Drawing.Color.Green, 2), x - 3, 65 - (int)(yPrev[1] * 22), x, 65 - (int)(y[1] * 22));
-                    gAcc.DrawLine(new Pen(System.Drawing.Color.Blue, 2), x - 3, 65 - (int)(yPrev[2] * 22), x, 65 - (int)(y[2] * 22));
-                    gGyr.DrawLine(new Pen(System.Drawing.Color.Red, 2), x - 3, 65 - (int)(yPrev[3] / 10.0), x, 65 - (int)(y[3] / 10.0));
-                    gGyr.DrawLine(new Pen(System.Drawing.Color.Green, 2), x - 3, 65 - (int)(yPrev[4] / 10.0), x, 65 - (int)(y[4] / 10.0));
-                    gGyr.DrawLine(new Pen(System.Drawing.Color.Blue, 2), x - 3, 65 - (int)(yPrev[5] / 10.0), x, 65 - (int)(y[5] / 10.0));
+                    gAcc.DrawLine(new Pen(System.Drawing.Color.Red, 2), x - dx, 65 - (int)(yPrev[0] * 22), x, 65 - (int)(y[0] * 22));
+                    gAcc.DrawLine(new Pen(System.Drawing.Color.Green, 2), x - dx, 65 - (int)(yPrev[1] * 22), x, 65 - (int)(y[1] * 22));
+                    gAcc.DrawLine(new Pen(System.Drawing.Color.Blue, 2), x - dx, 65 - (int)(yPrev[2] * 22), x, 65 - (int)(y[2] * 22));
+                    gGyr.DrawLine(new Pen(System.Drawing.Color.Red, 2), x - dx, 65 - (int)(yPrev[3] / 10.0), x, 65 - (int)(y[3] / 10.0));
+                    gGyr.DrawLine(new Pen(System.Drawing.Color.Green, 2), x - dx, 65 - (int)(yPrev[4] / 10.0), x, 65 - (int)(y[4] / 10.0));
+                    gGyr.DrawLine(new Pen(System.Drawing.Color.Blue, 2), x - dx, 65 - (int)(yPrev[5] / 10.0), x, 65 - (int)(y[5] / 10.0));
                 }
                 for (int j = 0; j < 6; j++) yPrev[j] = y[j];
             }
