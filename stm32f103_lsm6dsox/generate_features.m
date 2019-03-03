@@ -1,0 +1,162 @@
+clear all;
+clc;
+
+%% parameterek
+W=52; % ablakszelesseg a szegmentalashoz
+files={ % adatfajlok (szintaxis: {'fajlnev', osztaly})
+    {'lsm6dsox_2019_03_04_00_16_43.txt',0}
+    {'lsm6dsox_2019_03_04_00_17_51.txt',1}
+};
+
+%% feature vektor osszeallitasa
+% szintaxis: {'forras_feature', kuszob}
+% forras lehet: accX, accY, accZ, acc, acc2, gyrX, gyrY, gyrZ, gyr, gyr2
+% feature lehet: mean, var, energy, pk2pk, cross, crossP, crossN, peak, peakP, peakN, min, max
+% kuszob csak a kovetkezokhoz kell: cross, crossP, crossN, peak, peakP, peakN
+F={
+    {'accX_mean'}
+    {'accX_var'}
+    {'accX_energy'}
+    {'accX_pk2pk'}
+    {'accX_cross',0}
+    {'accX_crossP',0}
+    {'accX_crossN',0}
+    {'accX_peaks',0.5}
+    {'accX_peaksP',0.5}
+    {'accX_peaksN',0.5}
+    {'accX_min'}
+    {'accX_max'}
+};
+
+%% beolvasas es feature generalas
+features=[];
+for ff=1:length(files)
+    fp=fopen(files{ff}{1});
+    data=cell2mat(textscan(fp,'%f %f %f %f %f %f','HeaderLines',1));
+    fclose(fp);
+    data(:,1:3)=data(:,1:3)/1000;
+    features_ff=zeros(floor(size(data,1)/W),length(F));
+    
+    for ii=1:length(F)
+        sep=find((F{ii}{1}=='_'));
+        source=F{ii}{1}(1:sep-1);
+        feature=F{ii}{1}(sep+1:end);
+        switch source
+            case 'accX'
+                input=data(:,1);
+            case 'accY'
+                input=data(:,2);
+            case 'accZ'
+                input=data(:,3);
+            case 'acc'
+                input=sqrt(data(:,1).^2+data(:,2).^2+data(:,3).^2);
+            case 'acc2'
+                input=data(:,1).^2+data(:,2).^2+data(:,3).^2;
+            case 'gyrX'
+                input=data(:,4);
+            case 'gyrY'
+                input=data(:,5);
+            case 'gyrZ'
+                input=data(:,6);
+            case 'gyr'
+                input=sqrt(data(:,4).^2+data(:,5).^2+data(:,6).^2);
+            case 'gyr2'
+                input=data(:,4).^2+data(:,5).^2+data(:,6).^2;
+            otherwise
+                error('Invalid source: %s',source);
+        end
+        switch feature
+            case 'mean' % atlag
+                for jj=1:size(features_ff,1)
+                    features_ff(jj,ii)=mean(input((jj-1)*W+1:jj*W));
+                end
+            case 'var' % variancia
+                for jj=1:size(features_ff,1)
+                    features_ff(jj,ii)=var(input((jj-1)*W+1:jj*W),1);
+                end
+            case 'energy' % energia
+                for jj=1:size(features_ff,1)
+                    features_ff(jj,ii)=sum(input((jj-1)*W+1:jj*W).^2);
+                end
+            case 'pk2pk' % terjedelem
+                for jj=1:size(features_ff,1)
+                    features_ff(jj,ii)=max(input((jj-1)*W+1:jj*W))-min(input((jj-1)*W+1:jj*W));
+                end
+            case 'cross' % kuszobszint keresztezeseinek szama
+                features_ff(:,ii)=0;
+                threshold=F{ii}{2};
+                for jj=1:size(features_ff,1)
+                    for kk=(jj-1)*W+2:jj*W
+                        if (input(kk-1)<threshold && input(kk)>=threshold) || (input(kk-1)>threshold && input(kk)<=threshold)
+                            features_ff(jj,ii)=features_ff(jj,ii)+1;
+                        end
+                    end
+                end
+            case 'crossP' % kuszobszint felfuto keresztezeseinek szama
+                features_ff(:,ii)=0;
+                threshold=F{ii}{2};
+                for jj=1:size(features_ff,1)
+                    for kk=(jj-1)*W+2:jj*W
+                        if input(kk-1)<threshold && input(kk)>=threshold
+                            features_ff(jj,ii)=features_ff(jj,ii)+1;
+                        end
+                    end
+                end
+            case 'crossN' % kuszobszint lefuto keresztezeseinek szama
+                features_ff(:,ii)=0;
+                threshold=F{ii}{2};
+                for jj=1:size(features_ff,1)
+                    for kk=(jj-1)*W+2:jj*W
+                        if input(kk-1)>threshold && input(kk)<=threshold
+                            features_ff(jj,ii)=features_ff(jj,ii)+1;
+                        end
+                    end
+                end
+            case 'peaks' % csucsok szama
+                features_ff(:,ii)=0;
+                threshold=F{ii}{2};
+                for jj=1:size(features_ff,1)
+                    for kk=(jj-1)*W+2:jj*W-1
+                        if input(kk)>=input(kk-1)+threshold && input(kk)>=input(kk+1)+threshold
+                            features_ff(jj,ii)=features_ff(jj,ii)+1;
+                        end
+                        if input(kk)<=input(kk-1)-threshold && input(kk)<=input(kk+1)-threshold
+                            features_ff(jj,ii)=features_ff(jj,ii)+1;
+                        end
+                    end
+                end
+            case 'peaksP' % lokalis maximumok szama
+                features_ff(:,ii)=0;
+                threshold=F{ii}{2};
+                for jj=1:size(features_ff,1)
+                    for kk=(jj-1)*W+2:jj*W-1
+                        if input(kk)>=input(kk-1)+threshold && input(kk)>=input(kk+1)+threshold
+                            features_ff(jj,ii)=features_ff(jj,ii)+1;
+                        end
+                    end
+                end
+            case 'peaksN' % lokalis minimumok szama
+                features_ff(:,ii)=0;
+                threshold=F{ii}{2};
+                for jj=1:size(features_ff,1)
+                    for kk=(jj-1)*W+2:jj*W-1
+                        if input(kk)<=input(kk-1)-threshold && input(kk)<=input(kk+1)-threshold
+                            features_ff(jj,ii)=features_ff(jj,ii)+1;
+                        end
+                    end
+                end
+            case 'min' % minimum
+                for jj=1:size(features_ff,1)
+                    features_ff(jj,ii)=min(input((jj-1)*W+1:jj*W));
+                end
+            case 'max' % maximum
+                for jj=1:size(features_ff,1)
+                    features_ff(jj,ii)=max(input((jj-1)*W+1:jj*W));
+                end
+            otherwise
+                error('Invalid feature: %s',feature);
+        end
+    end
+    features=[features ; features_ff files{ff}{2}*ones(size(features_ff,1),1)];
+end
+features
