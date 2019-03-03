@@ -79,7 +79,7 @@ namespace lsm6dsox_gui
                     if (chbLog.Checked)
                     {
                         file = new System.IO.StreamWriter("lsm6dsox_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".txt");
-                        file.WriteLine("A_X [g]\tA_Y [g]\tA_Z [g]\tG_X [dps]\tG_Y [dps]\tG_Z [dps]");
+                        file.WriteLine("A_X [mg]\tA_Y [mg]\tA_Z [mg]\tG_X [dps]\tG_Y [dps]\tG_Z [dps]");
                     }
                 }
                 catch (Exception ex)
@@ -115,7 +115,7 @@ namespace lsm6dsox_gui
                 buf[4, bufEnd] = Convert.ToInt16(str.Substring(26, 4), 16) * 2000.0 / 32767.0; //gyrY
                 buf[5, bufEnd] = Convert.ToInt16(str.Substring(31, 4), 16) * 2000.0 / 32767.0; //gyrZ
                 if (bufValidCnt < buf.GetLength(1)) bufValidCnt++;
-                if (chbLog.Checked) file.WriteLine("{0, 0:E5}\t{1, 1:E5}\t{2, 2:E5}\t{3, 3:E5}\t{4, 4:E5}\t{5, 5:E5}", buf[0, bufEnd], buf[1, bufEnd], buf[2, bufEnd], buf[3, bufEnd], buf[4, bufEnd], buf[5, bufEnd]);
+                if (chbLog.Checked) file.WriteLine("{0, 0:E5}\t{1, 1:E5}\t{2, 2:E5}\t{3, 3:E5}\t{4, 4:E5}\t{5, 5:E5}", buf[0, bufEnd]*1000, buf[1, bufEnd]*1000, buf[2, bufEnd]*1000, buf[3, bufEnd], buf[4, bufEnd], buf[5, bufEnd]);
                 BeginInvoke(new Action(() => { plotData(); }));
             }
             catch (Exception ex)
