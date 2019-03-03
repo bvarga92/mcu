@@ -24,6 +24,8 @@ namespace lsm6dsox_gui
         private Bitmap bmAcc, bmGyr;
         private Graphics gAcc, gGyr;
         private System.IO.StreamWriter file;
+        private Semaphore comPortSemaphore = new Semaphore(1, 1);
+        private bool sampling = false;
 
         public Form1()
         {
@@ -73,55 +75,66 @@ namespace lsm6dsox_gui
                 comPort.Handshake = (Handshake)Enum.Parse(typeof(Handshake), "None");
                 comPort.Parity = (Parity)Enum.Parse(typeof(Parity), "None");
                 comPort.DataReceived += new SerialDataReceivedEventHandler(dataReceivedHandler);
+                btnConnect.BackColor = Color.SpringGreen;
+                btnConnect.Text = "Disconnect";
+                chbLog.Enabled = false;
+                sampling = true;
                 try
                 {
-                    comPort.Open();
                     if (chbLog.Checked)
                     {
                         file = new System.IO.StreamWriter("lsm6dsox_" + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") + ".txt");
                         file.WriteLine("A_X [mg]\tA_Y [mg]\tA_Z [mg]\tG_X [dps]\tG_Y [dps]\tG_Z [dps]");
                     }
+                    comPort.Open();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-                btnConnect.BackColor = Color.SpringGreen;
-                btnConnect.Text = "Disconnect";
-                chbLog.Enabled = false;
             }
             else
             {
+                comPortSemaphore.WaitOne();
+                sampling = false;
                 if (comPort.IsOpen) (new Thread(() => { comPort.Close(); })).Start();
                 btnConnect.BackColor = SystemColors.Control;
                 btnConnect.Text = "Connect";
                 if (chbLog.Checked) file.Close();
                 chbLog.Enabled = true;
+                comPortSemaphore.Release();
             }
         }
 
         private void dataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            comPortSemaphore.WaitOne();
+            if (!sampling)
+            {
+                comPortSemaphore.Release();
+                return;
+            }
             try
             {
-                System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
                 string str = ((SerialPort)sender).ReadTo("$");
                 temperature = 25 + Convert.ToInt16(str.Substring(1, 4), 16) / 256.0;
                 bufEnd = (bufEnd + 1) % buf.GetLength(1);
-                buf[0, bufEnd] = Convert.ToInt16(str.Substring(6, 4), 16) * 16.0 / 32767.0; //accX
-                buf[1, bufEnd] = Convert.ToInt16(str.Substring(11, 4), 16) * 16.0 / 32767.0; //accY
-                buf[2, bufEnd] = Convert.ToInt16(str.Substring(16, 4), 16) * 16.0 / 32767.0; //accZ
+                buf[0, bufEnd] = Convert.ToInt16(str.Substring(6, 4), 16) * 16000.0 / 32767.0; //accX
+                buf[1, bufEnd] = Convert.ToInt16(str.Substring(11, 4), 16) * 16000.0 / 32767.0; //accY
+                buf[2, bufEnd] = Convert.ToInt16(str.Substring(16, 4), 16) * 16000.0 / 32767.0; //accZ
                 buf[3, bufEnd] = Convert.ToInt16(str.Substring(21, 4), 16) * 2000.0 / 32767.0; //gyrX
                 buf[4, bufEnd] = Convert.ToInt16(str.Substring(26, 4), 16) * 2000.0 / 32767.0; //gyrY
                 buf[5, bufEnd] = Convert.ToInt16(str.Substring(31, 4), 16) * 2000.0 / 32767.0; //gyrZ
                 if (bufValidCnt < buf.GetLength(1)) bufValidCnt++;
-                if (chbLog.Checked) file.WriteLine("{0, 0:E5}\t{1, 1:E5}\t{2, 2:E5}\t{3, 3:E5}\t{4, 4:E5}\t{5, 5:E5}", buf[0, bufEnd]*1000, buf[1, bufEnd]*1000, buf[2, bufEnd]*1000, buf[3, bufEnd], buf[4, bufEnd], buf[5, bufEnd]);
+                if (chbLog.Checked) file.WriteLine("{0, 0:E5}\t{1, 1:E5}\t{2, 2:E5}\t{3, 3:E5}\t{4, 4:E5}\t{5, 5:E5}", buf[0, bufEnd], buf[1, bufEnd], buf[2, bufEnd], buf[3, bufEnd], buf[4, bufEnd], buf[5, bufEnd]);
                 BeginInvoke(new Action(() => { plotData(); }));
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            comPortSemaphore.Release();
         }
 
         private void plotData()
@@ -136,9 +149,9 @@ namespace lsm6dsox_gui
                 for (int j = 0; j < 6; j++) y[j] = buf[j, (bufEnd + 1 + i) % buf.GetLength(1)];
                 if (i > buf.GetLength(1) - bufValidCnt)
                 {
-                    gAcc.DrawLine(new Pen(System.Drawing.Color.Red, 2), x - dx, 65 - (int)(yPrev[0] * 22), x, 65 - (int)(y[0] * 22));
-                    gAcc.DrawLine(new Pen(System.Drawing.Color.Green, 2), x - dx, 65 - (int)(yPrev[1] * 22), x, 65 - (int)(y[1] * 22));
-                    gAcc.DrawLine(new Pen(System.Drawing.Color.Blue, 2), x - dx, 65 - (int)(yPrev[2] * 22), x, 65 - (int)(y[2] * 22));
+                    gAcc.DrawLine(new Pen(System.Drawing.Color.Red, 2), x - dx, 65 - (int)(yPrev[0] * 0.022), x, 65 - (int)(y[0] * 0.022));
+                    gAcc.DrawLine(new Pen(System.Drawing.Color.Green, 2), x - dx, 65 - (int)(yPrev[1] * 0.022), x, 65 - (int)(y[1] * 0.022));
+                    gAcc.DrawLine(new Pen(System.Drawing.Color.Blue, 2), x - dx, 65 - (int)(yPrev[2] * 0.022), x, 65 - (int)(y[2] * 0.022));
                     gGyr.DrawLine(new Pen(System.Drawing.Color.Red, 2), x - dx, 65 - (int)(yPrev[3] / 10.0), x, 65 - (int)(y[3] / 10.0));
                     gGyr.DrawLine(new Pen(System.Drawing.Color.Green, 2), x - dx, 65 - (int)(yPrev[4] / 10.0), x, 65 - (int)(y[4] / 10.0));
                     gGyr.DrawLine(new Pen(System.Drawing.Color.Blue, 2), x - dx, 65 - (int)(yPrev[5] / 10.0), x, 65 - (int)(y[5] / 10.0));

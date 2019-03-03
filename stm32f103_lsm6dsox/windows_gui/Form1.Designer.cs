@@ -120,8 +120,6 @@
             // chbLog
             // 
             this.chbLog.AutoSize = true;
-            this.chbLog.Checked = true;
-            this.chbLog.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chbLog.Location = new System.Drawing.Point(242, 41);
             this.chbLog.Name = "chbLog";
             this.chbLog.Size = new System.Drawing.Size(70, 17);
