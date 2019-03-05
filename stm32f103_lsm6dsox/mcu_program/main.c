@@ -1,6 +1,7 @@
 #include "stm32f1xx_hal.h"
 #include "system.h"
 #include "vcp.h"
+#include "buzzer_button.h"
 #include "lsm6dsox.h"
 
 void vcpReceived(uint8_t data){}
@@ -51,12 +52,17 @@ int main(void){
 	HAL_Init();
 	clockInit();
 	ledInit();
+	btnBzrInit();
 	vcpInit();
 	lsmInit();
+	if(btnRead()){
+		buzzerOn();
+		while(1) ;
+	}
 	while(1){
-		ledToggle();
 		lsmGetData(&lsmData);
 		printSerial(&lsmData);
+		ledToggle();
 	}
 	return 1;
 }

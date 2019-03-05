@@ -17,7 +17,15 @@ static void lsmWriteReg(uint8_t reg, uint8_t data){
 
 void lsmInit(void){
 	GPIO_InitTypeDef portInit;
+	/* INT1 es INT2 */
 	__GPIOB_CLK_ENABLE();
+	portInit.Pin=GPIO_PIN_6|GPIO_PIN_7;
+	portInit.Mode=GPIO_MODE_INPUT;
+	portInit.Speed=GPIO_SPEED_HIGH;
+	portInit.Pull=GPIO_NOPULL;
+	HAL_GPIO_Init(GPIOB,&portInit);
+	/* I2C */
+	__HAL_AFIO_REMAP_I2C1_ENABLE();
 	__I2C1_CLK_ENABLE();
 	__AFIO_CLK_ENABLE();
 	portInit.Pin=GPIO_PIN_8|GPIO_PIN_9;
