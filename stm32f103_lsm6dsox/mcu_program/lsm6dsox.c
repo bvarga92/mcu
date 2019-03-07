@@ -23,7 +23,7 @@ void lsmInit(void (*irqHandler)(void)){
 	portInit.Pin=GPIO_PIN_6|GPIO_PIN_7;
 	portInit.Mode=GPIO_MODE_IT_RISING;
 	portInit.Speed=GPIO_SPEED_HIGH;
-	portInit.Pull=GPIO_PULLDOWN;
+	portInit.Pull=GPIO_NOPULL;
 	HAL_GPIO_Init(GPIOB,&portInit);
 	HAL_NVIC_SetPriority(EXTI9_5_IRQn,1,1);
 	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
