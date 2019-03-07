@@ -7,5 +7,6 @@
 	uint8_t btnRead(void);
 	void buzzerOn(void);
 	void buzzerOff(void);
+	void buzzerBeep(void);
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef _SYSTEM_C_
-#define _SYSTEM_C_
+#ifndef _SYSTEM_H_
+#define _SYSTEM_H_
 
 	#include "stm32f1xx_hal.h"
 

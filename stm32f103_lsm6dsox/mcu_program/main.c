@@ -57,7 +57,6 @@ int main(void){
 	lsmInit();
 	if(btnRead()){
 		buzzerOn();
-		while(1) ;
 	}
 	while(1){
 		lsmGetData(&lsmData);

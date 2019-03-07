@@ -35,7 +35,7 @@ void lsmInit(void){
 	HAL_GPIO_Init(GPIOB,&portInit);
 	__HAL_AFIO_REMAP_I2C1_ENABLE();
 	i2c1.Instance=I2C1;
-	i2c1.Init.ClockSpeed=400000; //I2C 400 kbps
+	i2c1.Init.ClockSpeed=400000; //400 kbps
 	i2c1.Init.DutyCycle=I2C_DUTYCYCLE_2;
 	i2c1.Init.OwnAddress1=0;
 	i2c1.Init.AddressingMode=I2C_ADDRESSINGMODE_7BIT;
