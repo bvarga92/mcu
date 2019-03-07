@@ -13,7 +13,7 @@
 		uint16_t gyr_z;
 	} lsm_data_t;
 
-	void lsmInit(void);
+	void lsmInit(void (*irqHandler)(void));
 	void lsmGetData(lsm_data_t *dataOut);
 
 #endif

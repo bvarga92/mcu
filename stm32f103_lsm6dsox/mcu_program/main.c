@@ -54,9 +54,10 @@ int main(void){
 	ledInit();
 	btnBzrInit();
 	vcpInit();
-	lsmInit();
+	lsmInit(buzzerBeep);
 	if(btnRead()){
 		buzzerOn();
+		while(1) ;
 	}
 	while(1){
 		lsmGetData(&lsmData);

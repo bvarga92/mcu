@@ -2,6 +2,7 @@
 #include "stm32f1xx_hal_i2c.h"
 
 static I2C_HandleTypeDef i2c1;
+static void (*lsmIRQHandler)(void);
 
 static uint8_t lsmReadReg(uint8_t reg){
 	uint8_t temp;
@@ -15,15 +16,18 @@ static void lsmWriteReg(uint8_t reg, uint8_t data){
 	HAL_I2C_Master_Transmit(&i2c1,0xD6,temp,2,1000);
 }
 
-void lsmInit(void){
+void lsmInit(void (*irqHandler)(void)){
 	GPIO_InitTypeDef portInit;
-	/* INT1 es INT2 */
+	/* INT1 es INT2 kulso megszakitas */
 	__GPIOB_CLK_ENABLE();
 	portInit.Pin=GPIO_PIN_6|GPIO_PIN_7;
-	portInit.Mode=GPIO_MODE_INPUT;
+	portInit.Mode=GPIO_MODE_IT_RISING;
 	portInit.Speed=GPIO_SPEED_HIGH;
-	portInit.Pull=GPIO_NOPULL;
+	portInit.Pull=GPIO_PULLDOWN;
 	HAL_GPIO_Init(GPIOB,&portInit);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn,1,1);
+	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+	lsmIRQHandler=irqHandler;
 	/* I2C */
 	__HAL_AFIO_REMAP_I2C1_ENABLE();
 	__I2C1_CLK_ENABLE();
@@ -48,6 +52,14 @@ void lsmInit(void){
 	while(lsmReadReg(0x0F)!=0x6C) ; //WHO_AM_I regiszter ellenorzese
 	lsmWriteReg(0x10,0x24); //gyorsulasmero: 26 Hz, 16 g
 	lsmWriteReg(0x11,0x2C); //giroszkop: 26 Hz, 2000 dps
+}
+
+void EXTI9_5_IRQHandler(void){
+	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_6|GPIO_PIN_7);
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+	lsmIRQHandler();
 }
 
 void lsmGetData(lsm_data_t *dataOut){
