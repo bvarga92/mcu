@@ -268,7 +268,7 @@ for ff=1:length(files)
     features=[features ; features_ff files{ff}{2}*ones(size(features_ff,1),1)];
 end
 
-%% ARFF fajl generalasa
+%% ARFF fajl generalasa a Weka szamara
 fp=fopen('features.arff','wt');
 fprintf(fp,'@relation ''MLC''\n\n');
 for ii=1:length(F)
@@ -300,3 +300,36 @@ treeClassifier=ClassificationTree.fit(features(:,1:end-1),features(:,end),'Predi
 output=treeClassifier.predict(features(:,1:end-1));
 treeClassifier.view
 fprintf('Misclassifications: %d\n\n',sum(output~=features(:,end)));
+
+%% Unico altal generalt UCF fajlbol konfiguracios tomb eloallitasa
+ucffile='conf.ucf';
+
+fpout=fopen('lsm6dsox_conf.h','wt');
+fprintf(fpout,'#ifndef _CONF_H_\n');
+fprintf(fpout,'#define _CONF_H_\n\n');
+fprintf(fpout,'const uint8_t conf[]={\n');
+fpin=fopen(ucffile,'rt');
+confcount=0;
+while 1
+    line=fgetl(fpin);
+    if ~ischar(line) % fajl vege
+        break;
+    elseif length(line)<2 || strcmp(line(1:2),'--') % ures sor vagy komment 
+        continue;
+    elseif strcmpi(line(1:4),'WAIT') % varakozas --> 0x00 cimet irunk be, ilyen regiszter ugysincs
+        confcount=confcount+1;
+        twait_ms=sscanf(line,'%*s %d');
+        fprintf(fpout,'\t0x00, 0x%02X,\n',twait_ms);
+    elseif strcmp(line(1:2),'Ac') % regiszter cim es ertek
+        confcount=confcount+1;
+        addr_val=sscanf(line,'Ac %x %x');
+        fprintf(fpout,'\t0x%02X, 0x%02X,\n',addr_val(1),addr_val(2));
+    else
+        warning('unknown command\n\t%s',line)
+    end
+end
+fclose(fpin);
+fprintf(fpout,'};\n\n');
+fprintf(fpout,'#define CONF_SIZE %d\n\n',confcount);
+fprintf(fpout,'#endif\n');
+fclose(fpout);
