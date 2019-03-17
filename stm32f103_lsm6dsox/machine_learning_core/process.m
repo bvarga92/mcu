@@ -4,8 +4,8 @@ clc;
 %% parameterek
 W=52; % ablakszelesseg a szegmentalashoz
 files={ % adatfajlok (szintaxis: {'fajlnev', osztaly})
-    {'lsm6dsox_2019_03_17_22_45_33.txt',0}
-    {'lsm6dsox_2019_03_17_22_46_47.txt',1}
+    {'lsm6dsox_2019_03_17_23_36_21.txt',0}
+    {'lsm6dsox_2019_03_17_23_35_31.txt',1}
 };
 
 %% feature vektor osszeallitasa
@@ -143,8 +143,20 @@ for ff=1:length(files)
     data=cell2mat(textscan(fp,'%f %f %f %f %f %f','HeaderLines',1));
     fclose(fp);
     data(:,1:3)=data(:,1:3)/1000;
-    features_ff=zeros(floor(size(data,1)/W),length(F));
     
+    figure(ff);
+    subplot(211);
+    plot(data(:,1:3));
+    ylabel('a [g]');
+    title(sprintf('Class %d accelerometer',files{ff}{2}));
+    legend('x','y','z');
+    subplot(212);
+    plot(data(:,4:6));
+    ylabel('\beta [\circ/s]');
+    title(sprintf('Class %d gyroscope',files{ff}{2}));
+    legend('x','y','z');
+    
+    features_ff=zeros(floor(size(data,1)/W),length(F));
     for ii=1:length(F)
         sep=find((F{ii}{1}=='_'));
         source=F{ii}{1}(1:sep-1);
