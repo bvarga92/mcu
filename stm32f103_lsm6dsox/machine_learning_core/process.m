@@ -4,8 +4,8 @@ clc;
 %% parameterek
 W=52; % ablakszelesseg a szegmentalashoz
 files={ % adatfajlok (szintaxis: {'fajlnev', osztaly})
-    {'lsm6dsox_2019_03_04_00_16_43.txt',0}
-    {'lsm6dsox_2019_03_04_00_17_51.txt',1}
+    {'lsm6dsox_2019_03_17_22_45_33.txt',0}
+    {'lsm6dsox_2019_03_17_22_46_47.txt',1}
 };
 
 %% feature vektor osszeallitasa
@@ -50,30 +50,30 @@ F={
     {'accZ_peaksN',0.5}
     {'accZ_min'}
     {'accZ_max'}
-    {'acc_mean'}
-    {'acc_var'}
-    {'acc_energy'}
-    {'acc_pk2pk'}
-    {'acc_cross',0}
-    {'acc_crossP',0}
-    {'acc_crossN',0}
-    {'acc_peaks',0.5}
-    {'acc_peaksP',0.5}
-    {'acc_peaksN',0.5}
-    {'acc_min'}
-    {'acc_max'}
-    {'acc2_mean'}
-    {'acc2_var'}
-    {'acc2_energy'}
-    {'acc2_pk2pk'}
-    {'acc2_cross',0}
-    {'acc2_crossP',0}
-    {'acc2_crossN',0}
-    {'acc2_peaks',0.25}
-    {'acc2_peaksP',0.25}
-    {'acc2_peaksN',0.25}
-    {'acc2_min'}
-    {'acc2_max'}
+%     {'acc_mean'}
+%     {'acc_var'}
+%     {'acc_energy'}
+%     {'acc_pk2pk'}
+%     {'acc_cross',0}
+%     {'acc_crossP',0}
+%     {'acc_crossN',0}
+%     {'acc_peaks',0.5}
+%     {'acc_peaksP',0.5}
+%     {'acc_peaksN',0.5}
+%     {'acc_min'}
+%     {'acc_max'}
+%     {'acc2_mean'}
+%     {'acc2_var'}
+%     {'acc2_energy'}
+%     {'acc2_pk2pk'}
+%     {'acc2_cross',0}
+%     {'acc2_crossP',0}
+%     {'acc2_crossN',0}
+%     {'acc2_peaks',0.25}
+%     {'acc2_peaksP',0.25}
+%     {'acc2_peaksN',0.25}
+%     {'acc2_min'}
+%     {'acc2_max'}
     {'gyrX_mean'}
     {'gyrX_var'}
     {'gyrX_energy'}
@@ -110,30 +110,30 @@ F={
     {'gyrZ_peaksN',100}
     {'gyrZ_min'}
     {'gyrZ_max'}
-    {'gyr_mean'}
-    {'gyr_var'}
-    {'gyr_energy'}
-    {'gyr_pk2pk'}
-    {'gyr_cross',0}
-    {'gyr_crossP',0}
-    {'gyr_crossN',0}
-    {'gyr_peaks',100}
-    {'gyr_peaksP',100}
-    {'gyr_peaksN',100}
-    {'gyr_min'}
-    {'gyr_max'}
-    {'gyr2_mean'}
-    {'gyr2_var'}
-    {'gyr2_energy'}
-    {'gyr2_pk2pk'}
-    {'gyr2_cross',0}
-    {'gyr2_crossP',0}
-    {'gyr2_crossN',0}
-    {'gyr2_peaks',10000}
-    {'gyr2_peaksP',10000}
-    {'gyr2_peaksN',10000}
-    {'gyr2_min'}
-    {'gyr2_max'}
+%     {'gyr_mean'}
+%     {'gyr_var'}
+%     {'gyr_energy'}
+%     {'gyr_pk2pk'}
+%     {'gyr_cross',0}
+%     {'gyr_crossP',0}
+%     {'gyr_crossN',0}
+%     {'gyr_peaks',100}
+%     {'gyr_peaksP',100}
+%     {'gyr_peaksN',100}
+%     {'gyr_min'}
+%     {'gyr_max'}
+%     {'gyr2_mean'}
+%     {'gyr2_var'}
+%     {'gyr2_energy'}
+%     {'gyr2_pk2pk'}
+%     {'gyr2_cross',0}
+%     {'gyr2_crossP',0}
+%     {'gyr2_crossN',0}
+%     {'gyr2_peaks',10000}
+%     {'gyr2_peaksP',10000}
+%     {'gyr2_peaksN',10000}
+%     {'gyr2_min'}
+%     {'gyr2_max'}
 };
 
 %% beolvasas es feature szamitas
