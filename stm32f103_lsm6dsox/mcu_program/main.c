@@ -6,7 +6,7 @@
 
 void vcpReceived(uint8_t data){}
 
-void printSerial(const lsm_data_t *data){
+void serialPrintData(const lsm_data_t *data){
 	uint8_t buf[36];
 	buf[ 0]='|';
 	buf[ 1]=((data->temp  & 0xF000)>>12)+'0'; if(buf[ 1]>'9') buf[ 1]+=7;
@@ -49,20 +49,27 @@ void printSerial(const lsm_data_t *data){
 
 int main(void){
 	lsm_data_t lsmData;
+	uint32_t int2Cntr=0;
 	HAL_Init();
 	clockInit();
 	ledInit();
 	btnBzrInit();
 	vcpInit();
-	lsmInit(buzzerBeep);
-	if(btnRead()){
-		buzzerOn();
-		while(1) ;
-	}
+	lsmInit(true, true, buzzerOn, buzzerOff);
 	while(1){
-		lsmGetData(&lsmData);
-		printSerial(&lsmData);
 		ledToggle();
+		lsmGetData(&lsmData);
+		serialPrintData(&lsmData);
+		if(lsmReadINT2()){
+			int2Cntr++;
+			if(int2Cntr==52){
+				lsmClearINT2();
+				int2Cntr=0;
+			}
+		}
+		else{
+			int2Cntr=0;
+		}
 	}
 	return 1;
 }

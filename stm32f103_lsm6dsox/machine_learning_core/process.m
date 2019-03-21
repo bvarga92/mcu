@@ -317,8 +317,8 @@ fprintf('Misclassifications: %d\n\n',sum(output~=features(:,end)));
 ucffile='conf.ucf';
 
 fpout=fopen('lsm6dsox_conf.h','wt');
-fprintf(fpout,'#ifndef _CONF_H_\n');
-fprintf(fpout,'#define _CONF_H_\n\n');
+fprintf(fpout,'#ifndef _LSM6DSOX_CONF_H_\n');
+fprintf(fpout,'#define _LSM6DSOX_CONF_H_\n\n');
 fprintf(fpout,'const uint8_t conf[]={\n');
 fpin=fopen(ucffile,'rt');
 confcount=0;
