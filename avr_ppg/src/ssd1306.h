@@ -34,13 +34,13 @@
 	/* beallitja a szovegkurzort megadott pozicioba */
 	void displaySetCursor(uint8_t x, uint8_t y);
 
-	/* kirja az atadott karaktert a kurzor helyere */
+	/* kiirja az atadott karaktert a kurzor helyere */
 	void displayPrintChar(char ch);
 
-	/* kirja az atadott nullterminalt sztringet a kurzor helyere */
+	/* kiirja az atadott nullterminalt sztringet a kurzor helyere */
 	void displayPrintText(char* str);
 
-	/* kirja az atadott egesz szamot a kurzor helyere */
+	/* kiirja az atadott egesz szamot a kurzor helyere */
 	void displayPrintInteger(int n);
 
 #endif

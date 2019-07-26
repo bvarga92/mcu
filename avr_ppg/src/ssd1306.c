@@ -102,7 +102,7 @@ void displaySetCursor(uint8_t x, uint8_t y){
 	cursorY=(y>56)?56:y;
 }
 
-/* kirja az atadott karaktert a kurzor helyere */
+/* kiirja az atadott karaktert a kurzor helyere */
 void displayPrintChar(char ch){
 	uint16_t byte;
 	uint8_t i;
@@ -123,13 +123,13 @@ void displayPrintChar(char ch){
 	}
 }
 
-/* kirja az atadott nullterminalt sztringet a kurzor helyere */
+/* kiirja az atadott nullterminalt sztringet a kurzor helyere */
 void displayPrintText(char* str){
 	uint8_t i;
 	for(i=0;str[i];i++) displayPrintChar(str[i]);
 }
 
-/* kirja az atadott egesz szamot a kurzor helyere */
+/* kiirja az atadott egesz szamot a kurzor helyere */
 void displayPrintInteger(int n){
 	int div;
 	if(n==0){
