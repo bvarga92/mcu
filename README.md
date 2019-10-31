@@ -11,6 +11,7 @@
 - **avr_ucos2**: uC/OS-II beüzemelése ATmega128 mikrokontrolleren
 - **avr_uvmeter**: UV index, hőmérséklet, páratartalom, légnyomás mérése ATtiny85-tel
 - **efm32_helloworld**: tesztprojekt az EFM32GG-STK3700 fejlesztőkártyához
+- **pocketbeagle_usb_midi**: USB-MIDI gateway PocketBeagle kártyával
 - **stm32f103_agilent_logger**: PC-s adatgyűjtő interfész az Agilent/HP 34401A multiméterhez ([videó](https://www.youtube.com/watch?v=FOJCqtJNScE&list=PL9_VlVdB8s882QMHiqJlDpJeKWxwP5CIG))
 - **stm32f103_lidar**: 3D szkenner Garmin Lite v3 LIDAR eszközzel
 - **stm32f103_lsm6dsox**: az LSM6DSOX gyorsulásmérő illesztése STM32F103 mikrokontrollerhez

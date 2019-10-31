@@ -1,0 +1,24 @@
+#!/bin/bash
+
+echo "0" > /sys/class/leds/beaglebone:green:usr3/brightness
+
+echo "Waiting for UART4..."
+while [ ! -c /dev/ttyS4 ]
+do
+	sleep 1
+done
+/home/debian/setbaud
+echo "31250 kbps set for /dev/ttyS4"
+
+echo "Waiting for USB MIDI controller..."
+while [ ! -c /dev/snd/midiC1D0 ]
+do
+	sleep 1
+done
+echo "USB MIDI controller detected!"
+
+cat /dev/snd/midiC1D0 > /dev/ttyS4 &
+echo "The USB-MIDI gateway is ready to use!"
+
+echo "1" > /sys/class/leds/beaglebone:green:usr3/brightness
+
