@@ -1,6 +1,10 @@
 # USB-MIDI gateway
 
-![photo](https://raw.githubusercontent.com/bvarga92/mcu/main/pocketbeagle_usb_midi/photo.jpg)
+![photo_top](https://raw.githubusercontent.com/bvarga92/mcu/main/pocketbeagle_usb_midi/photo_top.jpg)
+
+![photo_bottom](https://raw.githubusercontent.com/bvarga92/mcu/main/pocketbeagle_usb_midi/photo_bottom.jpg)
+
+![schematic](https://raw.githubusercontent.com/bvarga92/mcu/main/pocketbeagle_usb_midi/schematic.png)
 
 ## Telepítés:
 
